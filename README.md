@@ -5,7 +5,8 @@ This document explains the flow of how the payment is collected by the BPP from 
 The on_search request is sent by the BPP for the payment.
 ### If at the BPP level, the payment is collected by the seller app for all the providers, or for Inventory Seller Node(ISN) seller apps:
 The on_search contains the payments array is associated to the whole catalog inside the message body.
-```"message": {
+```
+"message": {
   "catalog": {
     "payments": [
                   {
@@ -29,7 +30,8 @@ The on_search contains the payments array is associated to the whole catalog ins
 ```
 ### If at the BPP level, the payment is collected by the seller app for some selected providers:
 The payment array is associated to the particular provider who chooses to collect the payment through the seller app. 
-```"providers": [
+```
+"providers": [
               {
                 "id": "P1",
                 "payments": [
@@ -54,7 +56,8 @@ The payment array is associated to the particular provider who chooses to collec
 ```
 ## init
 The init request is sent by the buyer app(BAP). This request may contain an optional TTL which allows the BAP to give a time window for which the payment transaction will be active. If the transaction is still in pending state at the end of the TTL, then the BAP will terminate the transaction.
-```"payments": [
+```
+"payments": [
               {
                 "type": "PRE-FULFILLMENT",
                 "collected_by": "BPP",
@@ -78,7 +81,8 @@ The init request is sent by the buyer app(BAP). This request may contain an opti
 ```
 ## on_init
 The seller app sends the on_init payload to the BAP. The on_init contains the payment details which are necessary for the payment. It also contains a signature which has the value of a signed uri which is signed by the ED25519 . This uri can be used by the buyer to render the payment gateway and make the payment.
-```"payments": [
+```
+"payments": [
         {
           "type": "PRE-FULFILLMENT",
           "collected_by": "BPP",
@@ -136,13 +140,15 @@ This is an unsolicited call which returns with the status of the payment. The re
 
 ## TTL expire: 
 ### When the TTL mentioned by the buyer expires with either no response or pending status, the buyer initiates a cancel request. This cancel request contains a cancellation_reason_id to explain the reason of cancellation.
- ```"message": {
+ ```
+"message": {
              "cancellation_reason_id": "022"
             }
 ```
 ### Payment failed:
 ### When the payment fails, the on_status returns status: 'payment failed'  in the error object inside the message body.
-```"error": {
+```
+"error": {
           "code": "31004",
           "message": "Payment Failed"
          }
