@@ -5,7 +5,7 @@ This document explains the flow of how the payment is collected by the BPP from 
 The on_search request is sent by the BPP for the payment.
 ### If at the BPP level, the payment is collected by the seller app for all the providers, or for Inventory Seller Node(ISN) seller apps:
 The on_search contains the payments array is associated to the whole catalog inside the message body.
-"message": {
+```"message": {
   "catalog": {
     "payments": [
                   {
@@ -26,6 +26,7 @@ The on_search contains the payments array is associated to the whole catalog ins
                   ],
             }
           }
+```
 ### If at the BPP level, the payment is collected by the seller app for some selected providers:
 The payment array is associated to the particular provider who chooses to collect the payment through the seller app. 
 "providers": [
