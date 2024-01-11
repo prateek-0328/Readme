@@ -2,50 +2,23 @@
 The following is an illustrative flow to demonstrate a Request For Quotation(RFQ) flow.
 
 ## BUYER SEARCH & DISCOVERY
-The buyer sends a search request through the buyer app(BAP). BPP sends a search request to the gateway 
-which broadcasts the search request to multiple seller apps according to country,domain and city in context. 
-The seller apps responds to the search request with an on_search which is directly sent to the buyer app. 
-The on_search contains the product catalog which includes add-ons, variants, offers and a communication channel 
-which is used to communicate between the buyer and the seller app.If the on_search does not contain the chat 
-link then the BAP can send the chat link in the select request.Both these are optional.
+The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Product Platform (BPP) relays this request to the gateway, which broadcasts it based on country, domain, and city parameters. Sellers respond with an on_search message directly sent to the buyer app. The on_search includes a product catalog with add-ons, variants, offers, and an optional communication channel for buyer-seller interactions. If the on_search lacks a chat link, the BAP can include it in the subsequent select request.
 
 ## RFQ (Request For Quotation) FLOW
-After discussion between the buyer and the seller over the communication channel, 
-the buyer requests for quotation.The buyer app sends the RFQ via a select 
-request to the seller app along with a TTL within which buyer must recieve the response. 
-The seller app responds to the RFQ with quote and breakup including the logistics charges.
+After discussions between the buyer and seller through the communication channel, the buyer requests a quotation. The buyer app sends the RFQ via a select request to the seller app, including a Time-To-Live (TTL) for response receipt. The seller app responds with a quote, providing a detailed breakdown, including logistics charges.
 
 ## ORDER INITIALIZATION
-After recieving the on_select from the seller app, for order initialization, the 
-buyer app sends an init request which includes billing details and exact address of delivery.The seller 
-app confirms this through on_init and initializes the order.
+Upon receiving the on_select from the seller app, the buyer app initiates the order by sending an init request, providing billing details and the precise delivery address. The seller app confirms this through an on_init call, initializing the order.
 
 
 ## PURCHASE ORDER
-Next, the purchase order is placed by the buyer app using the confirm request to 
-create a final digital contract. The PO is accepted by the BPP through an on_confirm 
-request. In case of prepaid payment collection by BPP, the payment URI and the TTL
-within which the payment must be completed,
- is also sent in the on_confirm call.
+Next, the buyer app places the purchase order using a confirm request, creating a final digital contract. The Purchase Order (PO) is accepted by the BPP through an on_confirm request. In cases of prepaid payment collection by BPP, the on_confirm call includes a payment URI and a TTL for payment completion.
 
 ## PAYMENT COMMUNICATION for prepaid payment collected by BAP
-For the case of prepaid payment collection by BAP, once the payment is collected, an 
-update request is sent by the BAP signifying that the payment is done. A payment URI 
-for the successful payment is also sent. The BPP acknowledges this call and sends 
-the on_update request in return.
+In cases where the payment is collected by the Buyer App (BAP), once the payment is collected, an update request is sent to the BPP, signifying that the payment is complete. The BAP also provides a payment URI for the successful transaction. The BPP acknowledges this through an on_update request.
 
 ## PAYMENT COMMUNICATION for payment collected by BPP
-For notifying the status of the payment in case of prepaid payment collected by BPP,
-the on_status request is sent.If the payment status is successful, the on_status 
-contains a transaction success message along with the  proforma invoice.If the 
-payment fails, the on_status contains "Payment Failed" message along with 31004 
-error code.If the TTL expires, the BPP updates this to the BAP using the on_status, 
-to which the BAP responds with a NACK with an error code 31004 and message 
-'Payment TTL Expired'.If the payment fails or TTL expires, the BAP sends a cancel 
-request to cancel the order, which the BPP acknowledges using the on_cancel call.
-It also initiates any refund if the payment had already been made.
+For prepaid payment collected by BPP, the on_status request notifies the payment status. A successful payment status includes a transaction success message along with a proforma invoice. If the payment fails, the on_status message contains a "Payment Failed" notification with a 31004 error code. If the TTL expires, the BPP updates the BAP using on_status, and the BAP responds with a NACK, providing error code 31004 and the message 'Payment TTL Expired.' In case of payment failure or TTL expiration, the BAP can send a cancel request, acknowledged by the BPP using the on_cancel call. Refunds are initiated if the payment had already been made.
 
 ## Request for ORDER STATUS  
-This is an optional call. the BAP can ask for the status of the transaction by 
-sending a status request to enquire Order status or Tracking info. The BPP responds 
-with an on_status. 
+This is an optional call where the BAP can inquire about the status of the transaction by sending a status request for order status or tracking information. The BPP responds with an on_status.
