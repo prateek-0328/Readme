@@ -2,7 +2,7 @@
 The following is an illustrative flow to demonstrate a Non Request For Quotation(RFQ) flow.
 
 ## BUYER SEARCH & DISCOVERY
-The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Product Platform (BPP) relays this request to the gateway, which then broadcasts it based on country, domain, and city parameters. Relevant information is sent directly to the buyer app in an on_search message, providing a detailed product catalog, including add-ons, variants, and offers.
+The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Provider Platform (BPP) relays this request to the gateway, which then broadcasts it based on country, domain, and city parameters. Relevant information is sent to the buyer app in an on_search message, providing a detailed product catalog, including add-ons, variants, and offers.
 
 ## SELECTION OF ITEMS AND PRICE NEGOTIATION
 Upon receiving catalogs through the on_search call, the buyer makes selections, choosing items, add-ons, variants, and offers. The Buyer App communicates these choices through a select request to the BPP. The BPP responds with a quote, offering a detailed breakdown, including logistics charges, for further negotiation.
