@@ -1,4 +1,4 @@
-# B2B Complete NON RFQ flow
+# B2B NON RFQ flow
 The following is an illustrative flow to demonstrate a Non Request For Quotation(RFQ) flow.
 
 ## BUYER SEARCH & DISCOVERY
