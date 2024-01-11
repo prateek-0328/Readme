@@ -3,6 +3,7 @@ The following is an illustrative flow to demonstrate a Request For Quotation(RFQ
 
 ## BUYER SEARCH & DISCOVERY
 The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Provider Platform (BPP) relays this request to the gateway, which broadcasts it based on country, domain, and city parameters. Seller apps respond with an on_search message directly to the buyer app. The on_search includes a product catalog with add-ons, variants, offers, and an optional communication channel for buyer-seller interactions. If the on_search lacks a chat link, the BAP can include it in the subsequent select request.
+! [BUYER SEARCH & DISCOVERY] (FlowDiagrams/RFQSearchAndDiscovery.png)
 
 ## RFQ (Request For Quotation) FLOW
 After discussions between the buyer and seller through the communication channel, the buyer requests a quotation. The buyer app sends the RFQ via a select request to the seller app, including a Time-To-Live (TTL) for response receipt. The seller app responds with a quote, providing a detailed breakdown, including logistics charges.
