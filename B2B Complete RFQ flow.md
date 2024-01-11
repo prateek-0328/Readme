@@ -1,8 +1,8 @@
-# B2B Complete RFQ flow
+# B2B RFQ flow
 The following is an illustrative flow to demonstrate a Request For Quotation(RFQ) flow.
 
 ## BUYER SEARCH & DISCOVERY
-The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Product Platform (BPP) relays this request to the gateway, which broadcasts it based on country, domain, and city parameters. Sellers respond with an on_search message directly sent to the buyer app. The on_search includes a product catalog with add-ons, variants, offers, and an optional communication channel for buyer-seller interactions. If the on_search lacks a chat link, the BAP can include it in the subsequent select request.
+The buyer initiates the process by submitting a search request through the Buyer App (BAP). The Buyer Provider Platform (BPP) relays this request to the gateway, which broadcasts it based on country, domain, and city parameters. Seller apps respond with an on_search message directly to the buyer app. The on_search includes a product catalog with add-ons, variants, offers, and an optional communication channel for buyer-seller interactions. If the on_search lacks a chat link, the BAP can include it in the subsequent select request.
 
 ## RFQ (Request For Quotation) FLOW
 After discussions between the buyer and seller through the communication channel, the buyer requests a quotation. The buyer app sends the RFQ via a select request to the seller app, including a Time-To-Live (TTL) for response receipt. The seller app responds with a quote, providing a detailed breakdown, including logistics charges.
@@ -20,5 +20,5 @@ In cases where the payment is collected by the Buyer App (BAP), once the payment
 ## PAYMENT COMMUNICATION for payment collected by BPP
 For prepaid payment collected by BPP, the on_status request notifies the payment status. A successful payment status includes a transaction success message along with a proforma invoice. If the payment fails, the on_status message contains a "Payment Failed" notification with a 31004 error code. If the TTL expires, the BPP updates the BAP using on_status, and the BAP responds with a NACK, providing error code 31004 and the message 'Payment TTL Expired.' In case of payment failure or TTL expiration, the BAP can send a cancel request, acknowledged by the BPP using the on_cancel call. Refunds are initiated if the payment had already been made.
 
-## Request for ORDER STATUS  
+## REQUEST FOR ORDER STATUS  
 This is an optional call where the BAP can inquire about the status of the transaction by sending a status request for order status or tracking information. The BPP responds with an on_status.
